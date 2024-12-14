@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "python-project-50"
+version = "0.1.0"
+description = "Add your description here"
+authors = ["Azat <azamuzapbar@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "hexlet_code"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.scripts]
+gendiff = "hexlet_code.scripts.gendiff:main"
