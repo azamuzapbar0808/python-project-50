@@ -19,3 +19,4 @@ python = "^3.12"
 
 [tool.poetry.scripts]
 gendiff = "hexlet_code.scripts.gendiff:main"
+json_parser = "hexlet_code.scripts.json_parser:main"
