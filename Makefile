@@ -3,3 +3,7 @@ lint:
 
 install:
 	uv pip install -e .
+
+check:
+	make lint
+	pytest
