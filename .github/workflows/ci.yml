@@ -15,23 +15,19 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install uv
-        run: pip install uv
-
       - name: Create virtual environment
-        run: uv venv  # Создаёт виртуальное окружение
+        run: python -m venv venv
 
       - name: Install dependencies
-        run: uv pip install -e .
+        run: |
+          source venv/bin/activate
+          pip install --upgrade pip
+          pip install uv
+          uv venv  # создаем окружение для uv
+          uv pip install -e .
+          pip install flake8 pytest  # явно ставим нужные пакеты
 
-      - name: Run linter and tests
-        run: make check
-
-      - name: Test & publish code coverage
-        uses: paambaati/codeclimate-action@v9.0.0
-        if: github.ref_name == 'main'
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: make test-coverage
-          debug: true
+      - name: Run linter and pytest
+        run: |
+          source venv/bin/activate
+          make check
