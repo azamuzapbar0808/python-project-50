@@ -18,6 +18,9 @@ jobs:
       - name: Install uv
         run: pip install uv
 
+      - name: Create virtual environment
+        run: uv venv  # Создаёт виртуальное окружение
+
       - name: Install dependencies
         run: uv pip install -e .
 
