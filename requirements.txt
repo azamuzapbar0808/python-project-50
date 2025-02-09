@@ -1,6 +1,5 @@
 bcc==0.1.10
 flake8==7.1.1
--e file:///home/user/%D0%A0%D0%B0%D0%B1%D0%BE%D1%87%D0%B8%D0%B9%20%D1%81%D1%82%D0%BE%D0%BB/hexlet/python-project-50
 iniconfig==2.0.0
 mccabe==0.7.0
 numpy==2.2.2
