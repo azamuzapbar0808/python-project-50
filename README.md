@@ -22,3 +22,8 @@ $ gendiff file1.json file2.json
 }
 
 Теперь `gendiff` работает и как CLI, и как библиотека 🚀
+
+
+![CI](https://github.com/your-username/your-repo-name/actions/workflows/ci.yml/badge.svg)
+[![Code Climate](https://api.codeclimate.com/v1/badges/your-badge-id/test_coverage.svg)](https://codeclimate.com/github/your-username/your-repo-name/test_coverage)
+[![Code Climate](https://api.codeclimate.com/v1/badges/your-badge-id/maintainability.svg)](https://codeclimate.com/github/your-username/your-repo-name/maintainability)
