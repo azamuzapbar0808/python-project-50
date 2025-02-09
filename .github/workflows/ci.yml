@@ -9,18 +9,28 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-        # make depends on uv
+
+      - name: Install uv
+        run: pip install uv
+
+      - name: Create virtual environment
+        run: uv venv .venv
+
       - name: Install dependencies
         run: |
-          pip install uv
-          make install
+          source .venv/bin/activate
+          uv pip install -e .
+
       - name: Run linter and pytest
         run: |
+          source .venv/bin/activate
           make check
+
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
         if: github.ref_name == 'main'
