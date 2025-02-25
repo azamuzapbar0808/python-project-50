@@ -1,6 +1,16 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/azamuzapbar0808/python-project-50/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/azamuzapbar0808/python-project-50/actions)
 
+# Gendiff
+
+## Описание  
+Утилита `gendiff` сравнивает два файла (JSON/YAML) и показывает разницу в удобном формате.
+
+## Установка  
+```sh
+pip install gendiff
+```
+
 # gendiff
 
 ## Установка
@@ -40,3 +50,4 @@ $ gendiff file1.json file2.json
   + key: value2
   ...
 }
+

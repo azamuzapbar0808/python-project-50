@@ -1,17 +1,18 @@
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[project]
+[tool.poetry]
 name = "gendiff"
 version = "0.1.0"
 description = "Compares two configuration files and shows a difference."
+authors = ["Your Name <your-email@example.com>"]
 readme = "README.md"
-requires-python = ">=3.12"
-dependencies = ["gendiff"]
 
-[tool.hatch.build.targets.wheel]
-packages = ["gendiff"]
+[tool.poetry.dependencies]
+python = "^3.12"
+PyYAML = "^6.0"
+jsondiff = "^2.0"
 
-[project.scripts]
-gendiff = "gendiff.scripts.generate_diff:generate_diff"
+[tool.poetry.scripts]
+gendiff = "gendiff.scripts.cli:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

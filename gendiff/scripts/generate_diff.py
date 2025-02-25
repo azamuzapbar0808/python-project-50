@@ -1,33 +1,47 @@
+import json
 import yaml
 
-
-def load_yaml(filepath):
-    """Загружает YAML файл."""
-    with open(filepath, 'r', encoding='utf-8') as file:
-        return yaml.safe_load(file)
+from gendiff.scripts.formatters.stylish import format_stylish
 
 
-def generate_diff(file_path1, file_path2):
-    """Генерирует различия между двумя YAML файлами."""
-    data1 = load_yaml(file_path1)
-    data2 = load_yaml(file_path2)
+def parse_file(filepath):
+    if filepath.endswith(".json"):
+        with open(filepath) as f:
+            return json.load(f)
+    elif filepath.endswith(".yml") or filepath.endswith(".yaml"):
+        with open(filepath) as f:
+            return yaml.safe_load(f)
+    else:
+        raise ValueError("Unsupported file format")
 
-    all_keys = sorted(set(data1.keys()) | set(data2.keys()))
-    diff_result = []
 
-    for key in all_keys:
-        if key in data1 and key in data2:
-            if data1[key] == data2[key]:
-                diff_result.append(f"    {key}: {data1[key]}")
-            else:
-                diff_result.append(f"  - {key}: {data1[key]}")
-                diff_result.append(f"  + {key}: {data2[key]}")
-        elif key in data1:
-            diff_result.append(f"  - {key}: {data1[key]}")
+def build_diff(data1, data2):
+    keys = sorted(set(data1.keys()) | set(data2.keys()))
+    diff = {}
+
+    for key in keys:
+        if key in data1 and key not in data2:
+            diff[key] = {"status": "removed", "value": data1[key]}
+        elif key not in data1 and key in data2:
+            diff[key] = {"status": "added", "value": data2[key]}
+        elif isinstance(data1[key], dict) and isinstance(data2[key], dict):
+            diff[key] = {"status": "nested", "children": build_diff(data1[key], data2[key])}
+        elif data1[key] != data2[key]:
+            diff[key] = {"status": "changed", "old_value": data1[key], "new_value": data2[key]}
         else:
-            diff_result.append(f"  + {key}: {data2[key]}")
+            diff[key] = {"status": "unchanged", "value": data1[key]}
 
-    # Приводим булевые значения к маленьким буквам
-    diff_result = [line.replace('True', 'true').replace('False', 'false') for line in diff_result]
+    return diff
 
-    return "{\n" + "\n".join(diff_result) + "\n}"
+
+def generate_diff(file1, file2, format_name="stylish"):
+    data1 = parse_file(file1)
+    data2 = parse_file(file2)
+    diff = build_diff(data1, data2)
+
+    if format_name == "stylish":
+        return format_stylish(diff)
+    elif format_name == "json":
+        return json.dumps(diff, indent=2)
+    else:
+        raise ValueError(f"Unsupported format: {format_name}")

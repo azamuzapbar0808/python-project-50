@@ -1,16 +1,20 @@
-from gendiff.scripts import generate_diff
+from gendiff.scripts.generate_diff import generate_diff
 
+def read_file(filepath):
+    with open(filepath, 'r') as file:
+        return file.read().strip()
 
-def test_generate_diff():
-    result = generate_diff.generate_diff("tests/test_data/file1.yml",
-                                         "tests/test_data/file2.yml")
-    expected = """{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}"""
+def test_generate_diff_json():
+    expected_output = read_file('tests/test_data/expected_diff.txt')
+    result = generate_diff('tests/test_data/file1.json', 'tests/test_data/file2.json')
+    assert result.strip() == expected_output
 
-    assert result.strip() == expected.strip()
+def test_generate_diff_yaml():
+    expected_output = read_file('tests/test_data/expected_diff.txt')
+    result = generate_diff('tests/test_data/file1.yml', 'tests/test_data/file2.yml')
+    assert result.strip() == expected_output
+
+def test_generate_diff_nested():
+    expected_output = read_file('tests/test_data/expected_nested_diff.txt')
+    result = generate_diff('tests/test_data/nested1.yml', 'tests/test_data/nested2.yml')
+    assert result.strip() == expected_output
