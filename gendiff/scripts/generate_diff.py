@@ -1,6 +1,6 @@
 import json
 import yaml
-
+from gendiff.scripts.formatters.json import format_json
 from gendiff.scripts.formatters.stylish import format_stylish
 
 
@@ -45,6 +45,6 @@ def generate_diff(file1, file2, format_name="stylish"):
         from gendiff.scripts.formatters.plain import format_plain
         return format_plain(diff)
     elif format_name == "json":
-        return json.dumps(diff, indent=2)
+        return format_json(diff)
     else:
         raise ValueError(f"Unsupported format: {format_name}")

@@ -11,6 +11,14 @@
 pip install gendiff
 ```
 
+### JSON-формат
+
+Для вывода в JSON-формате используйте:
+
+```bash
+gendiff --format json path/to/file1.json path/to/file2.json
+```
+
 # gendiff
 
 ## Установка
