@@ -8,7 +8,8 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Compares two configuration files and shows a difference.")
     parser.add_argument("first_file", type=str, help="Path to the first file")
     parser.add_argument("second_file", type=str, help="Path to the second file")
-    parser.add_argument("-f", "--format", choices=["stylish", "json"], default="stylish", help="Set output format")
+    parser.add_argument("-f", "--format", choices=["stylish", "plain", "json"], default="stylish",
+                        help="Set output format")
     return parser.parse_args()
 
 

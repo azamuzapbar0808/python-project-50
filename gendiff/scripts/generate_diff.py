@@ -41,6 +41,9 @@ def generate_diff(file1, file2, format_name="stylish"):
 
     if format_name == "stylish":
         return format_stylish(diff)
+    elif format_name == "plain":
+        from gendiff.scripts.formatters.plain import format_plain
+        return format_plain(diff)
     elif format_name == "json":
         return json.dumps(diff, indent=2)
     else:
